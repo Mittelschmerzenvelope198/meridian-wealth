@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <h1 class="hero-title">{{ app_name }}</h1>
+    <p class="hero-sub">
+        An autonomous ReAct agent for Meridian Wealth Partners. It orchestrates SQL
+        portfolio lookups, market data, financial calculations, policy RAG, and live
+        web search to answer complex wealth-management queries.
+    </p>
+    <div class="hero-actions">
+        <a href="/chat" class="btn btn-primary">Open Chat Workspace</a>
+        <a href="/agent_info" class="btn btn-ghost">View Configuration</a>
+    </div>
+</section>
+
+<section class="cards">
+    <a class="card" href="/data?view=portfolio">
+        <h3>Portfolio Analysis</h3>
+        <p>Query client holdings, risk profiles, and allocations from the SQLite database.</p>
+        <span class="card-cta">Explore data &rarr;</span>
+    </a>
+    <a class="card" href="/data?view=market">
+        <h3>Market Data</h3>
+        <p>Retrieve stock prices, YTD returns, and analyst ratings for tickers and sectors.</p>
+        <span class="card-cta">Explore data &rarr;</span>
+    </a>
+    <a class="card" href="/data?view=policy">
+        <h3>Policy Compliance</h3>
+        <p>Search firm investment policy PDFs through a FAISS-backed RAG pipeline.</p>
+        <span class="card-cta">Explore data &rarr;</span>
+    </a>
+    <a class="card" href="/data?view=intelligence">
+        <h3>Market Intelligence</h3>
+        <p>Pull live market news and RBI updates via the Tavily Search API.</p>
+        <span class="card-cta">Explore data &rarr;</span>
+    </a>
+</section>
+{% endblock %}

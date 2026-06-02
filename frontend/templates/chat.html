@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Chat &middot; {{ app_name }}{% endblock %}
+
+{% block content %}
+<section class="chat-page">
+    <div class="chat-header">
+        <h2>Analyst Workspace</h2>
+        <p>Ask a complex wealth-management question. The agent streams its answer and shows every tool it uses.</p>
+    </div>
+
+    <div class="workspace">
+        <!-- Conversation -->
+        <div class="chat-col">
+            <div id="messages" class="messages">
+                <div class="msg msg-agent">
+                    <div class="msg-role">Agent</div>
+                    <div class="msg-body markdown">
+                        Hello. I'm the Meridian Financial Analyst Agent. Try asking me to
+                        compare sector exposure across clients, check policy limits, or pull
+                        the latest market outlook.
+                    </div>
+                </div>
+            </div>
+
+            <form id="chat-form" class="composer">
+                <textarea id="query" class="composer-input" rows="2"
+                    placeholder="e.g. Compare the IT sector exposure of Client CLT-001 and CLT-002..."></textarea>
+                <button type="submit" id="send-btn" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+
+        <!-- Tool trace (concise) -->
+        <aside class="trace-col">
+            <div class="trace-head">
+                <h3>Tool Trace</h3>
+                <span class="trace-hint">Tools the agent invoked, with inputs &amp; metrics.</span>
+            </div>
+            <div id="trace" class="trace-list">
+                <p class="trace-empty">No tools used yet.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Verbose execution trace (full system output) -->
+    <details class="exec-trace">
+        <summary>
+            <span>Execution Trace</span>
+            <span class="exec-sub">full verbose system output &middot; live over WebSocket</span>
+        </summary>
+        <div id="exec-log" class="exec-log"></div>
+    </details>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+<script src="{{ url_for('static', path='/app.js') }}"></script>
+{% endblock %}

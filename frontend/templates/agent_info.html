@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Agent Info &middot; {{ app_name }}{% endblock %}
+
+{% macro render(value) %}
+    {% if value is mapping %}
+        <table class="cfg-table">
+            {% for k, v in value.items() %}
+            <tr>
+                <th>{{ k }}</th>
+                <td>{{ render(v) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif value is iterable and value is not string %}
+        <ul class="cfg-list">
+            {% for item in value %}<li>{{ render(item) }}</li>{% endfor %}
+        </ul>
+    {% else %}
+        <span class="cfg-val">{{ value }}</span>
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+<section class="info-wrap">
+    <h2>Agent Tools</h2>
+    <p>The five capabilities the ReAct agent can invoke, with their data source and expected input.</p>
+    <div class="tools-grid">
+        {% for t in tools_info %}
+        <div class="tool-card">
+            <div class="tool-head">
+                <span class="tool-name">{{ t.label }}</span>
+                <code class="tool-id">{{ t.name }}</code>
+            </div>
+            <p class="tool-desc">{{ t.description }}</p>
+            <dl class="tool-meta">
+                <div><dt>Data source</dt><dd>{{ t.source }}</dd></div>
+                <div><dt>Input</dt><dd>{{ t.input }}</dd></div>
+            </dl>
+            {% if t.data_view %}
+            <a class="tool-link" href="/data?view={{ t.data_view }}">Explore this data &rarr;</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 style="margin-top:40px;">Configuration</h2>
+    <p>Structured system parameters loaded from <code>config.yaml</code>.</p>
+    <div class="cfg-root">
+        {{ render(config_data) }}
+    </div>
+</section>
+{% endblock %}

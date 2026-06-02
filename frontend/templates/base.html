@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark">◆</span>
+            <span class="brand-name">{{ app_name }}</span>
+        </div>
+        <nav class="nav">
+            <a href="/" class="nav-link {% if request.url.path == '/' %}active{% endif %}">Home</a>
+            <a href="/chat" class="nav-link {% if request.url.path == '/chat' %}active{% endif %}">Chat</a>
+            <a href="/data" class="nav-link {% if request.url.path == '/data' %}active{% endif %}">Data</a>
+            <a href="/agent_info" class="nav-link {% if request.url.path == '/agent_info' %}active{% endif %}">Agent Info</a>
+        </nav>
+    </header>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        Meridian Wealth Partners &middot; Financial Analyst Agent
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

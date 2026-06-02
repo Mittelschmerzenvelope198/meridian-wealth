@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Data Explorer &middot; {{ app_name }}{% endblock %}
+
+{% macro data_table(rows) %}
+    {% if rows %}
+    <div class="table-scroll">
+        <table class="data-table">
+            <thead>
+                <tr>{% for col in rows[0].keys() %}<th>{{ col }}</th>{% endfor %}</tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>{% for v in row.values() %}<td>{{ v if v is not none else "—" }}</td>{% endfor %}</tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="empty">No records found.</p>
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+<section class="data-wrap" data-tabs>
+    <div class="data-header">
+        <h2>Data Explorer</h2>
+        <p>Everything the agent can reach: portfolio records, market data, policy documents, and live intelligence.</p>
+    </div>
+
+    <nav class="tabs">
+        <button class="tab" data-tab="portfolio">Portfolio <span class="tab-count">{{ clients|length }}</span></button>
+        <button class="tab" data-tab="market">Market Data <span class="tab-count">{{ market|length }}</span></button>
+        <button class="tab" data-tab="policy">Policy Docs <span class="tab-count">{{ policy_docs|length }}</span></button>
+        <button class="tab" data-tab="intelligence">Intelligence</button>
+    </nav>
+
+    <!-- Portfolio -->
+    <div class="panel" id="panel-portfolio">
+        <h3>Clients <span class="muted-count">({{ clients|length }})</span></h3>
+        <p class="panel-note">Source: SQLite <code>clients</code> table &middot; tool <code>portfolio_lookup</code></p>
+        {{ data_table(clients) }}
+
+        <h3 style="margin-top:28px;">Holdings <span class="muted-count">({{ holdings|length }})</span></h3>
+        <p class="panel-note">Source: SQLite <code>holdings</code> table (joined with market data at query time)</p>
+        {{ data_table(holdings) }}
+    </div>
+
+    <!-- Market -->
+    <div class="panel" id="panel-market">
+        <h3>Market Data <span class="muted-count">({{ market|length }})</span></h3>
+        <p class="panel-note">Source: SQLite <code>market_data</code> table &middot; tool <code>market_data_search</code></p>
+        {{ data_table(market) }}
+    </div>
+
+    <!-- Policy -->
+    <div class="panel" id="panel-policy">
+        <h3>Policy Documents <span class="muted-count">({{ policy_docs|length }})</span></h3>
+        <p class="panel-note">Source: FAISS RAG over firm PDFs &middot; tool <code>policy_retriever</code></p>
+        <div class="doc-grid">
+            {% for d in policy_docs %}
+            <div class="doc-card">
+                <div class="doc-icon">PDF</div>
+                <div class="doc-body">
+                    <span class="doc-title">{{ d.title }}</span>
+                    <span class="doc-meta">
+                        {% if d.pages %}{{ d.pages }} pages &middot; {% endif %}{{ d.size_kb }} KB
+                    </span>
+                    <code class="doc-file">{{ d.name }}</code>
+                </div>
+            </div>
+            {% else %}
+            <p class="empty">No policy documents found in the data directory.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Intelligence -->
+    <div class="panel" id="panel-intelligence">
+        <h3>Market Intelligence</h3>
+        <p class="panel-note">Source: live web via the Tavily Search API &middot; tool <code>tavily_search</code></p>
+        <p class="intel-text">
+            Unlike the other sources, this data is <strong>fetched live</strong> at query time and not
+            stored locally. The agent uses it to pull the latest market news, RBI updates, and sector
+            analysis. Configuration:
+        </p>
+        <table class="cfg-table cfg-inline">
+            <tr><th>topic</th><td>{{ tavily_cfg.topic }}</td></tr>
+            <tr><th>max_results</th><td>{{ tavily_cfg.max_results }}</td></tr>
+        </table>
+        <p class="intel-text" style="margin-top:18px;">Example queries the agent might issue:</p>
+        <ul class="cfg-list">
+            <li>Latest outlook for the Indian IT sector</li>
+            <li>Recent RBI monetary policy decisions</li>
+            <li>Q3 earnings news for Reliance Industries</li>
+        </ul>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/app.js') }}"></script>
+{% endblock %}

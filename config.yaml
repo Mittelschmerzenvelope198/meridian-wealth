@@ -1,0 +1,48 @@
+# ==============================================================================
+# Meridian Wealth Partners - Financial Analyst Agentic Web App Configuration
+# ==============================================================================
+
+app:
+  name: "Meridian Financial Analyst Agent"
+  version: "1.0.0"
+
+# ------------------------------------------------------------------------------
+# Language Model Configurations
+# ------------------------------------------------------------------------------
+llm:
+  model_name: "gpt-5-mini"  # As specified in the notebook
+  # temperature: 0.0          # DELETE THIS.. NOT REQUIRED
+
+# ------------------------------------------------------------------------------
+# Embedding Model Configurations
+# ------------------------------------------------------------------------------
+embeddings:
+  model_name: "text-embedding-3-small"
+
+# ------------------------------------------------------------------------------
+# RAG & Document Processing Configurations
+# ------------------------------------------------------------------------------
+rag:
+  text_splitter:
+    chunk_size: 1000
+    chunk_overlap: 300
+    # separators: ["\n\n", "\n", ". ", " ", ""]  # DELETE THIS.. NOT REQUIRED
+  retriever:
+    vector_db_name: "meridian_vector_db"
+    k_results: 4            # Number of chunks retrieved per policy query
+
+# ------------------------------------------------------------------------------
+# Directory & File Paths
+# ------------------------------------------------------------------------------
+paths:
+  sqlite_db: "data/meridian_wealth.db"
+  policy_documents_dir: "data/policy_documents"
+  vector_db_dir: "vectordb"
+
+# ------------------------------------------------------------------------------
+# Tool Configurations
+# ------------------------------------------------------------------------------
+tools:
+  tavily_search:
+    topic: "news"
+    max_results: 5

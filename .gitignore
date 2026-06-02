@@ -1,0 +1,17 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Generated FAISS vector index (rebuilt on first run from the policy PDFs)
+vectordb/
+
+# Private keys / secrets — NEVER commit these
+*.pem
+*.ppk
+*.key
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
