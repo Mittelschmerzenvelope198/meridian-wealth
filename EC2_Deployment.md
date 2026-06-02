@@ -4,7 +4,12 @@ This is a **complete, beginner-friendly, copy-paste guide** to deploy the Meridi
 Financial Analyst Agent (FastAPI + LangChain) on a single AWS EC2 Ubuntu server,
 served to the public internet through Nginx and kept alive by `systemd`.
 
+follow this kink for the Gemini steps: https://gemini.google.com/share/2ea0597b8333
+
+
 By the end you will have the app running 24/7 at `http://<YOUR-EC2-PUBLIC-IP>/`.
+
+
 
 ---
 
